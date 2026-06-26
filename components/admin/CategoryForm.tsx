@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import UploadBox from './UploadBox'
 import type { AdminCategory } from '@/lib/admin/categories'
 
@@ -60,7 +60,7 @@ export default function CategoryForm({
     setForm((prev) => ({ ...prev, [field]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     onSubmit(form)
   }

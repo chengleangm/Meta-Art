@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import UploadBox from './UploadBox'
 import type { AdminProduct } from '@/lib/admin/products'
 
@@ -165,7 +165,7 @@ export default function ProductForm({ initialData, onSubmit, onCancel, isLoading
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     onSubmit(form)
   }

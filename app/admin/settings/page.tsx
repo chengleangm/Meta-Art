@@ -1,13 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import type { ComponentType } from 'react'
 import { Save, Store, User, Truck, Receipt } from 'lucide-react'
 import AdminLayout from '@/components/admin/AdminLayout'
 import UploadBox from '@/components/admin/UploadBox'
 
 type Tab = 'store' | 'profile' | 'shipping' | 'tax'
 
-const tabs: { value: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+const tabs: { value: Tab; label: string; icon: ComponentType<{ className?: string }> }[] = [
   { value: 'store', label: 'Infos boutique', icon: Store },
   { value: 'profile', label: 'Profil admin', icon: User },
   { value: 'shipping', label: 'Livraison', icon: Truck },

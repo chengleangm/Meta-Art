@@ -1,5 +1,6 @@
 'use client'
 
+import type { ComponentType } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -21,7 +22,7 @@ import {
 interface NavItem {
   label: string
   href: string
-  icon: React.ComponentType<{ className?: string }>
+  icon: ComponentType<{ className?: string }>
 }
 
 const navItems: NavItem[] = [

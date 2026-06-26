@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, type DragEvent, type ChangeEvent } from 'react'
 import { Upload, File, X } from 'lucide-react'
 
 interface UploadBoxProps {
