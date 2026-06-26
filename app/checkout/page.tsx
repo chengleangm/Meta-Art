@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+
 import { useState } from 'react'
 import { useCart } from '@/context/CartContext'
-import { Lock, CreditCard, ChevronRight } from 'lucide-react'
+import { Lock, CreditCard, ChevronRight, Loader2 } from 'lucide-react'
 
 const SHIPPING_OPTIONS = [
   { id: 'standard', label: 'Colissimo Standard (3-5 jours)', price: 5.99, free: true },
@@ -15,21 +16,53 @@ export default function CheckoutPage() {
   const { items, total } = useCart()
   const [shipping, setShipping] = useState('standard')
   const [step, setStep] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const selectedShipping = SHIPPING_OPTIONS.find((s) => s.id === shipping)!
   const shippingCost = total >= 50 && selectedShipping.free ? 0 : selectedShipping.price
   const grandTotal = total + shippingCost
+
+  const handleStripeCheckout = async () => {
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items,
+          shipping: { label: selectedShipping.label, cost: shippingCost },
+        }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setError(data.error ?? 'Une erreur est survenue.')
+        setLoading(false)
+      }
+    } catch {
+      setError('Impossible de contacter le serveur de paiement.')
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-4 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-black flex items-center justify-center">
-              <span className="text-lime-400 font-black text-xs">MA</span>
-            </div>
-            <span className="font-extrabold text-gray-900">Meta<span className="text-lime-500">Art</span></span>
+          <Link href="/">
+            <Image
+              src="/images/logo/metaart.png"
+              alt="Meta Art"
+              width={140}
+              height={46}
+              className="object-contain"
+              style={{ width: 'auto', height: '40px' }}
+              priority
+            />
           </Link>
           <div className="flex items-center gap-1 text-xs text-gray-400">
             <Lock size={12} className="text-green-500" />
@@ -145,30 +178,57 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Payment placeholder */}
+            {/* Stripe Payment */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
               <h2 className="font-bold text-gray-900 mb-4 text-lg flex items-center gap-2">
                 <CreditCard size={20} className="text-lime-500" />
-                Paiement
+                Paiement sécurisé
               </h2>
-              {/* TODO: Connect payment provider here (Stripe, PayPlug, etc.) */}
-              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 text-center">
-                <p className="font-semibold text-blue-800 mb-2">Intégration paiement à connecter</p>
-                <p className="text-sm text-blue-600">
-                  Cette section est prête à recevoir l&apos;intégration d&apos;un prestataire de paiement : <strong>Stripe</strong>, <strong>PayPlug</strong> (recommandé France), <strong>Mollie</strong> ou autre.
-                </p>
-                <div className="flex justify-center gap-3 mt-3">
-                  {['Stripe', 'PayPlug', 'Mollie', 'Adyen'].map((p) => (
-                    <span key={p} className="text-xs bg-white border border-blue-200 text-blue-700 px-3 py-1 rounded-lg font-semibold">
-                      {p}
-                    </span>
-                  ))}
-                </div>
+
+              {/* Accepted cards */}
+              <div className="flex items-center gap-2 mb-5">
+                {['Visa', 'Mastercard', 'Amex', 'CB'].map((card) => (
+                  <span key={card} className="px-2.5 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-lg border border-gray-200">
+                    {card}
+                  </span>
+                ))}
+                <span className="ml-auto flex items-center gap-1 text-xs text-gray-400">
+                  <Lock size={11} className="text-green-500" />
+                  Chiffrement SSL 256-bit
+                </span>
               </div>
 
-              <button className="mt-4 w-full flex items-center justify-center gap-2 py-4 bg-lime-400 text-black font-bold rounded-2xl hover:bg-lime-300 transition-all shadow-lg shadow-lime-400/30">
-                <Lock size={18} />
-                Confirmer la commande — {grandTotal.toFixed(2)} €
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-5 flex items-center gap-3">
+                <svg viewBox="0 0 60 25" className="h-6 shrink-0" aria-label="Stripe">
+                  <path d="M59.64 14.28h-8.06v-2.12c0-.88.44-1.32 1.24-1.32.8 0 1.24.44 1.24 1.32v.6h5.58v-.6C59.64 9.48 57.4 8 53.82 8c-3.6 0-5.84 1.48-5.84 4.28v2.12h-2.24v3.44h2.24V24h5.58v-8.28h5.52v-1.44zM10.34 24V8.28H4.76V24h5.58zM7.54 6.6c1.84 0 3.12-1.24 3.12-2.92 0-1.64-1.28-2.88-3.12-2.88S4.42 2.04 4.42 3.68C4.42 5.36 5.7 6.6 7.54 6.6zm16.6 10.44c0 1.44-.8 2.24-2.04 2.24-1.24 0-2.04-.8-2.04-2.24V8.28H14.5V17.4c0 4.12 2.44 6.92 6.88 6.92 1.52 0 2.88-.44 3.76-1.16V24h5.58V8.28h-5.58v8.76zM40.78 8c-1.48 0-2.8.52-3.68 1.32V8.28H31.5V24h5.58v-8.76c0-1.44.8-2.24 2.04-2.24 1.24 0 2.04.8 2.04 2.24V24h5.58v-9.12C46.74 10.8 44.22 8 40.78 8z" fill="#6772e5"/>
+                </svg>
+                <p className="text-sm text-gray-600">
+                  Vous allez être redirigé vers <strong>Stripe</strong>, la plateforme de paiement sécurisée. Vos données bancaires ne transitent jamais par nos serveurs.
+                </p>
+              </div>
+
+              {error && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600 font-medium">
+                  {error}
+                </div>
+              )}
+
+              <button
+                onClick={handleStripeCheckout}
+                disabled={loading || items.length === 0}
+                className="w-full flex items-center justify-center gap-2 py-4 bg-lime-400 text-black font-bold rounded-2xl hover:bg-lime-300 transition-all shadow-lg shadow-lime-400/30 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Redirection vers Stripe…
+                  </>
+                ) : (
+                  <>
+                    <Lock size={18} />
+                    Payer {grandTotal.toFixed(2)} € avec Stripe
+                  </>
+                )}
               </button>
             </div>
           </div>
