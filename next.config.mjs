@@ -1,6 +1,14 @@
+import path from 'node:path'
+
+const configuredDistDir = process.env.NEXT_DIST_DIR
+const distDir =
+  configuredDistDir && !path.isAbsolute(configuredDistDir)
+    ? configuredDistDir
+    : '.next'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: process.env.NEXT_DIST_DIR || '.next',
+  distDir,
   images: {
     remotePatterns: [
       {
