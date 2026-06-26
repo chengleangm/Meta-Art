@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { SlidersHorizontal, X, ChevronDown } from 'lucide-react'
 import ProductGrid from '@/components/ProductGrid'
 import ProductFilters, { FilterState, defaultFilters } from '@/components/ProductFilters'
@@ -27,20 +26,19 @@ const allCategories = [
 ]
 
 export default function ShopPage() {
-  const searchParams = useSearchParams()
   const [filters, setFilters] = useState<FilterState>(() => ({
     ...defaultFilters,
-    search: searchParams.get('q') ?? '',
+    search: '',
   }))
   const [sort, setSort] = useState('featured')
   const [filtersOpen, setFiltersOpen] = useState(false)
 
   useEffect(() => {
-    const q = searchParams.get('q') ?? ''
+    const q = new URLSearchParams(window.location.search).get('q') ?? ''
     setFilters((current) => (
       current.search === q ? current : { ...current, search: q }
     ))
-  }, [searchParams])
+  }, [])
 
   const filteredProducts = useMemo(() => {
     let result = [...products]
