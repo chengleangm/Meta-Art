@@ -55,23 +55,29 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
   const sidebarContent = (
     <div className="flex flex-col h-full bg-[#0f172a] w-64">
       {/* Logo */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
-        <Link href="/admin/dashboard">
+      <div className="relative px-5 pt-6 pb-5 border-b border-white/10 flex flex-col items-center">
+        <button
+          onClick={onClose}
+          className="lg:hidden absolute right-3 top-3 w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <X className="w-4 h-4" />
+        </button>
+        <Link href="/admin/dashboard" className="flex justify-center mb-3">
           <Image
             src="/images/logo/metaart.png"
             alt="Meta Art"
-            width={120}
-            height={40}
-            className="brightness-0 invert w-auto h-8 object-contain"
-            style={{ width: 'auto', height: '32px' }}
+            width={220}
+            height={80}
+            className="object-contain"
+            style={{ width: 'auto', height: '80px' }}
           />
         </Link>
-        <button
-          onClick={onClose}
-          className="lg:hidden text-gray-400 hover:text-white transition-colors"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-2">
+          <span className="px-2 py-0.5 bg-lime-400/20 text-lime-400 text-[10px] font-bold rounded uppercase tracking-widest">
+            Admin
+          </span>
+          <span className="text-gray-500 text-xs">Panneau de contrôle</span>
+        </div>
       </div>
 
       {/* Nav */}

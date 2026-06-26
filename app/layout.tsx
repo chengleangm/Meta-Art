@@ -3,8 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/context/CartContext'
 import { LanguageProvider } from '@/context/LanguageContext'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import SiteShell from '@/components/SiteShell'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,9 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} antialiased`}>
         <LanguageProvider>
           <CartProvider>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
+            <SiteShell>{children}</SiteShell>
           </CartProvider>
         </LanguageProvider>
       </body>
