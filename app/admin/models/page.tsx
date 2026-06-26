@@ -7,14 +7,12 @@ import { Plus, Pencil } from 'lucide-react'
 import AdminLayout from '@/components/admin/AdminLayout'
 import UploadBox from '@/components/admin/UploadBox'
 import ConfirmDeleteModal from '@/components/admin/ConfirmDeleteModal'
-import OrderStatusBadge from '@/components/admin/OrderStatusBadge'
 import { adminProducts, type AdminProduct } from '@/lib/admin/products'
-import type { OrderStatus } from '@/lib/admin/orders'
 
-const statusLabel: Record<string, string> = {
-  active: 'Actif',
-  draft: 'Brouillon',
-  archived: 'Archivé',
+const statusConfig: Record<string, { label: string; className: string }> = {
+  active: { label: 'Actif', className: 'bg-green-100 text-green-700' },
+  draft: { label: 'Brouillon', className: 'bg-yellow-100 text-yellow-700' },
+  archived: { label: 'Archivé', className: 'bg-gray-100 text-gray-500' },
 }
 
 export default function ModelsPage() {
@@ -100,7 +98,9 @@ export default function ModelsPage() {
                       </td>
                       <td className="px-4 py-3 text-gray-500 text-xs">{p.licenseType ?? '—'}</td>
                       <td className="px-4 py-3">
-                        <OrderStatusBadge status={p.status as OrderStatus} />
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${statusConfig[p.status]?.className ?? 'bg-gray-100 text-gray-500'}`}>
+                          {statusConfig[p.status]?.label ?? p.status}
+                        </span>
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1">
