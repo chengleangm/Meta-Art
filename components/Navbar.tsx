@@ -113,18 +113,20 @@ export default function Navbar() {
             >
               <Search size={18} />
             </button>
-            <button
+            <Link
+              href="/wishlist"
               className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors hidden sm:flex"
               aria-label={t.nav.wishlist}
             >
               <Heart size={18} />
-            </button>
-            <button
+            </Link>
+            <Link
+              href="/account"
               className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors hidden sm:flex"
               aria-label={t.nav.account}
             >
               <User size={18} />
-            </button>
+            </Link>
             <Link
               href="/cart"
               className="relative w-9 h-9 rounded-xl flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
@@ -203,6 +205,20 @@ export default function Navbar() {
                   <ShoppingCart size={16} />
                   {t.nav.mobileMenu.cartLabel}
                   {itemCount > 0 && ` (${itemCount})`}
+                </Link>
+                <Link
+                  href="/wishlist"
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <Heart size={16} />
+                  {t.nav.wishlist}
+                </Link>
+                <Link
+                  href="/account"
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  <User size={16} />
+                  {t.nav.account}
                 </Link>
                 <Link
                   href="/about"

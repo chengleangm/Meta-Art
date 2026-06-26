@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { Search, X } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { searchProducts, Product } from '@/lib/products'
 
 interface SearchBarProps {
@@ -18,6 +19,7 @@ export default function SearchBar({ onClose, className = '' }: SearchBarProps) {
   const [activeIndex, setActiveIndex] = useState(-1)
   const inputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -48,7 +50,15 @@ export default function SearchBar({ onClose, className = '' }: SearchBarProps) {
   }, [handleClickOutside])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isOpen) return
+    if (e.key === 'Enter' && query.trim()) {
+      e.preventDefault()
+      router.push(`/shop?q=${encodeURIComponent(query.trim())}`)
+      setIsOpen(false)
+      onClose?.()
+      return
+    }
+
+    if (!isOpen || results.length === 0) return
     if (e.key === 'ArrowDown') {
       e.preventDefault()
       setActiveIndex((i) => (i + 1) % results.length)
@@ -63,7 +73,16 @@ export default function SearchBar({ onClose, className = '' }: SearchBarProps) {
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
-      <div className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3 shadow-lg border border-gray-200">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          if (!query.trim()) return
+          router.push(`/shop?q=${encodeURIComponent(query.trim())}`)
+          setIsOpen(false)
+          onClose?.()
+        }}
+        className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3 shadow-lg border border-gray-200"
+      >
         <Search size={18} className="text-gray-400 shrink-0" />
         <input
           ref={inputRef}
@@ -75,11 +94,11 @@ export default function SearchBar({ onClose, className = '' }: SearchBarProps) {
           className="flex-1 text-sm text-gray-900 placeholder-gray-400 outline-none bg-transparent min-w-0"
         />
         {query && (
-          <button onClick={() => { setQuery(''); setResults([]); setIsOpen(false) }} className="text-gray-400 hover:text-gray-600">
+          <button type="button" onClick={() => { setQuery(''); setResults([]); setIsOpen(false) }} className="text-gray-400 hover:text-gray-600">
             <X size={16} />
           </button>
         )}
-      </div>
+      </form>
 
       {/* Dropdown */}
       {isOpen && results.length > 0 && (
