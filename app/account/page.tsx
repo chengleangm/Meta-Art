@@ -16,7 +16,7 @@ export default function AccountPage() {
         </div>
         <h1 className="text-3xl font-extrabold text-gray-900 mb-3">Compte</h1>
         <p className="text-gray-500 mb-8">
-          La connexion client sera branchee ici lorsque l'authentification sera configuree.
+          La connexion client sera branchee ici lorsque l&apos;authentification sera configuree.
         </p>
         <Link
           href="/shop"
