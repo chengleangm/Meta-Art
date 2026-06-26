@@ -1,0 +1,148 @@
+export type CustomerStatus = 'active' | 'blocked'
+
+export interface AdminCustomer {
+  id: string
+  name: string
+  email: string
+  phone: string
+  totalOrders: number
+  totalSpent: number
+  lastOrderDate: string
+  status: CustomerStatus
+  createdAt: string
+}
+
+export const adminCustomers: AdminCustomer[] = [
+  {
+    id: 'CUST-001',
+    name: 'Jean-Pierre Dupont',
+    email: 'jp.dupont@gmail.com',
+    phone: '+33 6 12 34 56 78',
+    totalOrders: 3,
+    totalSpent: 1689.40,
+    lastOrderDate: '2024-02-19T10:30:00Z',
+    status: 'active',
+    createdAt: '2023-11-10T09:00:00Z',
+  },
+  {
+    id: 'CUST-002',
+    name: 'Marie-Claire Lefebvre',
+    email: 'mc.lefebvre@orange.fr',
+    phone: '+33 7 98 76 54 32',
+    totalOrders: 2,
+    totalSpent: 351.70,
+    lastOrderDate: '2024-02-05T09:15:00Z',
+    status: 'active',
+    createdAt: '2023-12-05T14:00:00Z',
+  },
+  {
+    id: 'CUST-003',
+    name: 'Thomas Bergeron',
+    email: 'thomas.bergeron@hotmail.com',
+    phone: '+33 6 55 43 21 09',
+    totalOrders: 1,
+    totalSpent: 89.70,
+    lastOrderDate: '2024-02-10T16:45:00Z',
+    status: 'active',
+    createdAt: '2024-01-15T11:30:00Z',
+  },
+  {
+    id: 'CUST-004',
+    name: 'Isabelle Moreau',
+    email: 'i.moreau@wanadoo.fr',
+    phone: '+33 6 78 90 12 34',
+    totalOrders: 1,
+    totalSpent: 0,
+    lastOrderDate: '2024-02-14T11:00:00Z',
+    status: 'active',
+    createdAt: '2024-01-20T08:00:00Z',
+  },
+  {
+    id: 'CUST-005',
+    name: 'Philippe Garnier',
+    email: 'ph.garnier@free.fr',
+    phone: '+33 7 11 22 33 44',
+    totalOrders: 4,
+    totalSpent: 2145.50,
+    lastOrderDate: '2024-02-16T08:30:00Z',
+    status: 'active',
+    createdAt: '2023-09-01T07:00:00Z',
+  },
+  {
+    id: 'CUST-006',
+    name: 'Sandrine Petit',
+    email: 'sandrine.petit@gmail.com',
+    phone: '+33 6 99 88 77 66',
+    totalOrders: 5,
+    totalSpent: 479.20,
+    lastOrderDate: '2024-01-28T13:20:00Z',
+    status: 'active',
+    createdAt: '2023-08-22T10:00:00Z',
+  },
+  {
+    id: 'CUST-007',
+    name: 'Antoine Dubois',
+    email: 'a.dubois@outlook.fr',
+    phone: '+33 6 34 56 78 90',
+    totalOrders: 2,
+    totalSpent: 44.80,
+    lastOrderDate: '2024-01-22T17:00:00Z',
+    status: 'blocked',
+    createdAt: '2023-10-15T09:00:00Z',
+  },
+  {
+    id: 'CUST-008',
+    name: 'Nathalie Rousseau',
+    email: 'n.rousseau@sfr.fr',
+    phone: '+33 7 22 33 44 55',
+    totalOrders: 3,
+    totalSpent: 214.60,
+    lastOrderDate: '2024-02-08T10:00:00Z',
+    status: 'active',
+    createdAt: '2023-11-28T15:00:00Z',
+  },
+  {
+    id: 'CUST-009',
+    name: 'François Martin',
+    email: 'f.martin@entreprise.fr',
+    phone: '+33 6 12 98 76 54',
+    totalOrders: 2,
+    totalSpent: 450.00,
+    lastOrderDate: '2024-02-18T12:00:00Z',
+    status: 'active',
+    createdAt: '2023-07-10T08:30:00Z',
+  },
+  {
+    id: 'CUST-010',
+    name: 'Céline Fontaine',
+    email: 'celine.fontaine@yahoo.fr',
+    phone: '+33 6 87 65 43 21',
+    totalOrders: 1,
+    totalSpent: 29.90,
+    lastOrderDate: '2024-02-01T14:00:00Z',
+    status: 'active',
+    createdAt: '2024-01-25T16:00:00Z',
+  },
+  {
+    id: 'CUST-011',
+    name: 'Julien Lecomte',
+    email: 'j.lecomte@gmail.com',
+    phone: '+33 7 33 44 55 66',
+    totalOrders: 2,
+    totalSpent: 84.80,
+    lastOrderDate: '2024-02-15T16:20:00Z',
+    status: 'active',
+    createdAt: '2023-12-18T10:00:00Z',
+  },
+  {
+    id: 'CUST-012',
+    name: 'Sophie Bernard',
+    email: 'sophie.b@hotmail.fr',
+    phone: '+33 6 22 11 00 99',
+    totalOrders: 1,
+    totalSpent: 1349.80,
+    lastOrderDate: '2024-02-19T10:30:00Z',
+    status: 'active',
+    createdAt: '2024-02-10T09:00:00Z',
+  },
+]
