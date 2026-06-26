@@ -19,14 +19,14 @@ export default function UploadBox({ label, accept, onChange }: UploadBoxProps) {
     onChange?.(file)
   }
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = (e: DragEvent) => {
     e.preventDefault()
     setIsDragging(false)
     const file = e.dataTransfer.files?.[0] || null
     handleFile(file)
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
     handleFile(file)
   }
