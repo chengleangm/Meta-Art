@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Build output goes outside OneDrive to prevent sync interference during builds
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   images: {
     remotePatterns: [
       {
@@ -11,10 +13,6 @@ const nextConfig = {
         hostname: 'picsum.photos',
       },
     ],
-  },
-  experimental: {
-    // Limit parallel workers to prevent race conditions on Windows during static generation
-    cpus: 1,
   },
 }
 
