@@ -53,6 +53,7 @@ export default function Footer() {
                 width={120}
                 height={40}
                 className="h-10 w-auto object-contain brightness-0 invert"
+                style={{ width: 'auto', height: '40px' }}
               />
             </Link>
             <p className="text-sm leading-relaxed mb-5">{t.footer.description}</p>

@@ -55,7 +55,7 @@ export default function Navbar() {
               width={160}
               height={52}
               className="w-auto object-contain"
-              style={{ height: '52px' }}
+              style={{ width: 'auto', height: '52px' }}
               priority
             />
           </Link>

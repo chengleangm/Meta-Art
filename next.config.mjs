@@ -12,6 +12,10 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    // Limit parallel workers to prevent race conditions on Windows during static generation
+    cpus: 1,
+  },
 }
 
 export default nextConfig

@@ -63,6 +63,7 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
             width={120}
             height={40}
             className="brightness-0 invert w-auto h-8 object-contain"
+            style={{ width: 'auto', height: '32px' }}
           />
         </Link>
         <button

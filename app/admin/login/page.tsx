@@ -44,6 +44,7 @@ export default function AdminLoginPage() {
               width={140}
               height={48}
               className="h-10 w-auto object-contain"
+              style={{ width: 'auto', height: '40px' }}
             />
           </div>
 
